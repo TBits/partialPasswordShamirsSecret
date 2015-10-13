@@ -1,7 +1,7 @@
-Partial Passwords with Shamirs' Secret Sharing in PHP
-=====================================================
+Partial Passwords with Shamirs' Secret Sharing Scheme in PHP
+============================================================
 
-The idea is from http://www.smartarchitects.co.uk/news/9/15/Partial-Passwords---How.html, to use Shamir's Secret Sharing to test a partial password.
+The idea is from http://www.smartarchitects.co.uk/news/9/15/Partial-Passwords---How.html, to use Shamir's Secret Sharing Scheme to test a partial password.
 
 This is just an implementation, without proof or guarantuee for security. If you find a problem with it, please report it or submit a pull request!
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * implements partial passwords with Shamirs' Sharing Secret Scheme.
+ * implements partial passwords with Shamirs' Secret Sharing Scheme.
  *
  * see http://www.smartarchitects.co.uk/news/9/15/Partial-Passwords---How.html
  * see https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing
@@ -18,12 +18,37 @@ class PartialPasswordWithShamir
 	private $numberOfTestCharacters;
 	private $hashedK; // 32 bit integer
 	private $s; // array of 32 bit integers
-        private $requestedIndixes; // array if indexes where we want the password characters
+	private $requestedIndexes; // array if indexes where we want the password characters
+
+	public function toJson() {
+		$array = array(
+				'hashedK' => $this->hashedK,
+				's' => $this->s,
+				'numberOfTestCharacters' => $this->numberOfTestCharacters);
+		if (!empty($this->requestedIndexes)) {
+			$array['requestedIndexes'] = $this->requestedIndexes;
+		}
+		return json_encode($array);
+	}
+
+	public function fromJson($s) {
+		$value = json_decode($s, true);
+		$this->numberOfTestCharacters = $value['numberOfTestCharacters'];
+		$this->hashedK = $value['hashedK'];
+		$this->s = $value['s'];
+		if (in_array('requestedIndexes', array_keys($value))) {
+			$this->requestedIndexes = $value['requestedIndexes'];
+		}
+	}
 
 	public function restorePasswordParameters($numberOfTestCharacters, $hashedK, $s) {
 		$this->numberOfTestCharacters = $numberOfTestCharacters;
 		$this->hashedK = $hashedK;
 		$this->s = $s;
+	}
+
+	public function getNumberOfTestCharacters() {
+		return $this->numberOfTestCharacters;
 	}
 
 	public function initPassword($password, $numberOfTestCharacters) {
